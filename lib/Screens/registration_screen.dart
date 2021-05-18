@@ -1,5 +1,6 @@
 import 'package:cowin_portal/Screens/main_screen.dart';
 import 'package:cowin_portal/Widgets/drop_down_button.dart';
+import 'package:cowin_portal/Widgets/newdropdown.dart';
 import 'package:cowin_portal/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -75,26 +76,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     SizedBox(
                       height: 40,
                     ),
-                    DropDownButton(
-                      hintText: 'Select State',
-                      dropDownValue: dropDownValueState,
-                      onChangedCallback: (String newValue) {
-                        setState(() {
-                          dropDownValueState = newValue;
-                        });
-                      },
-                    ),
+                    NewDrop(),
                     SizedBox(
                       height: 30,
-                    ),
-                    DropDownButton(
-                      hintText: 'Select District',
-                      dropDownValue: dropDownValueDisctrict,
-                      onChangedCallback: (String newValue) {
-                        setState(() {
-                          dropDownValueDisctrict = newValue;
-                        });
-                      },
                     ),
                     SizedBox(
                       height: 83,
