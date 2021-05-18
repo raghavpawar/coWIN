@@ -23,7 +23,6 @@ class _MainScreenState extends State<MainScreen> {
           bottom: TabBar(
               indicatorColor: Colors.white,
               indicatorWeight: 3,
-              indicatorPadding: EdgeInsets.all(14),
               labelColor: Colors.white,
               tabs: [
                 Tab(

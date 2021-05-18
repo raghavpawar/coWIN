@@ -60,13 +60,18 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Sora
-  #     fonts:
-  #       - asset: fonts/Sora.ttf
-  #       - asset: fonts/Sora-Bold.ttf
-  #       - asset: fonts/Sora-SemiBold.ttf
-  #       - asset: fonts/Sora-ExtraBold.ttf
+  fonts:
+    - family: Sora
+      fonts:
+        - asset: fonts/Sora-Regular.ttf
+        - asset: fonts/Sora-Bold.ttf
+        - asset: fonts/Sora-SemiBold.ttf
+        - asset: fonts/Sora-ExtraBold.ttf
+        - asset: fonts/Sora-ExtraLight.ttf
+        - asset: fonts/Sora-Light.ttf
+        - asset: fonts/Sora-Medium.ttf
+        - asset: fonts/Sora-Thin.ttf
+    - family: Roboto
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

@@ -10,6 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(fontFamily: 'Sora'),
       debugShowCheckedModeBanner: false,
       title: 'Cowin App',
       home: RegistrationScreen(),
