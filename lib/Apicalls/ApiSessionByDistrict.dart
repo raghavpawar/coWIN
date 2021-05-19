@@ -1,11 +1,29 @@
-/*import 'package:flutter/material.dart';
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-const String sessionByDistrict =
-    "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByDistrict?district_id=512&date=31-03-2021";
+List<Session> sessionByPin;
 
-fetchDataBySessions() {
-  http.Response response = http.get(Uri.parse(sessionByDistrict));
+Future<List<Session>> fetchDataBySessions(String pincode) async {
+  print(pincode);
+
+  String sessionByDistrict =
+      "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByPin?pincode=$pincode&date=19-05-2021";
+
+  http.Response response = await http.get(Uri.parse(sessionByDistrict));
+
+  if (response.statusCode == 200) {
+    Map sessionsData = jsonDecode(response.body);
+    List<dynamic> data = sessionsData['sessions'];
+
+    print('Sessions');
+
+    print(data);
+
+    sessionByPin = data.map((json) => Session.fromJson(json)).toList();
+    return sessionByPin;
+  }
 }
 
 class Session {
@@ -138,4 +156,3 @@ class EnumValues<T> {
     return reverseMap;
   }
 }
-*/

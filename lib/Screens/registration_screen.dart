@@ -4,6 +4,8 @@ import 'package:cowin_portal/Widgets/newdropdown.dart';
 import 'package:cowin_portal/constants.dart';
 import 'package:flutter/material.dart';
 
+TextEditingController pincodeText = TextEditingController();
+
 class RegistrationScreen extends StatefulWidget {
   @override
   _RegistrationScreenState createState() => _RegistrationScreenState();
@@ -11,6 +13,11 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
+  void dispose() {
+    super.dispose();
+    pincodeText.dispose();
+  }
+
   Widget build(BuildContext context) {
     String dropDownValueState;
     String dropDownValueDisctrict;
@@ -56,6 +63,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 child: Column(
                   children: [
                     TextField(
+                      controller: pincodeText,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.only(left: 18, bottom: 12),
