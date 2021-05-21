@@ -1,32 +1,38 @@
+import 'package:cowin_portal/Apicalls/ApiSessionByDistrict.dart';
+import 'package:cowin_portal/constants.dart';
 import 'package:flutter/material.dart';
 
-class VaccineList extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        color: Colors.grey,
-        child: Column(
-          children: [
-            VaccineCard(),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 class VaccineCard extends StatelessWidget {
-  const VaccineCard({
-    Key key,
-  }) : super(key: key);
+  final String name;
+  final String address;
+  final String blockName;
+  final String districtName;
+  final String stateName;
+  final int pincode;
+  final int availableCapacity;
+  final Vaccine vaccine;
+  final int minAgeLimit;
+
+  VaccineCard({
+    this.address,
+    this.availableCapacity,
+    this.blockName,
+    this.districtName,
+    this.minAgeLimit,
+    this.name,
+    this.pincode,
+    this.stateName,
+    this.vaccine,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 2,
+      color: kcolorBlue,
+      elevation: 0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: Padding(
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.only(left: 17, top: 15, right: 7, bottom: 12),
         child: Row(
           children: [
             Expanded(
@@ -35,17 +41,21 @@ class VaccineCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'BHAGAT SINGH COLONY UPHC',
+                    name,
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
+                        fontFamily: 'Roboto',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                        color: Colors.white),
                   ),
                   Text(
-                    'Bhagat Singh Colony Dehradun, Dehradun, Uttarakhand, 248001',
+                    blockName == "Not Applicable"
+                        ? "$address, $districtName, $stateName, $pincode"
+                        : "$address, $blockName, $districtName, $stateName, $pincode",
                     style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
+                      fontSize: 12,
+                      color: Colors.white,
+                      fontFamily: 'Roboto',
                     ),
                   ),
                 ],
@@ -56,23 +66,42 @@ class VaccineCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
+                    decoration: BoxDecoration(
+                      color: Color(0xff00DC65),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10),
+                      ),
+                    ),
                     alignment: Alignment.center,
                     width: 50,
                     height: 25,
                     // padding: EdgeInsets.all(5),
-                    color: Colors.green,
-                    child: Text('38'),
+                    child: Text(
+                      availableCapacity.toString(),
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontFamily: 'Roboto',
+                      ),
+                    ),
                   ),
                   SizedBox(
-                    height: 6,
+                    height: 5,
                   ),
                   Text(
-                    'Covishield',
-                    style: TextStyle(fontSize: 15),
+                    vaccine.toString().split('.').last,
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.white,
+                      fontFamily: 'Roboto',
+                    ),
                   ),
                   Text(
-                    'Age 45+',
-                    style: TextStyle(color: Colors.red),
+                    "Age $minAgeLimit+",
+                    style: TextStyle(
+                      color: Color(0xffE93535),
+                      fontSize: 10,
+                      fontFamily: 'Roboto',
+                    ),
                   ),
                 ],
               ),

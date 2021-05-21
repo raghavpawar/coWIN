@@ -1,29 +1,49 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:cowin_portal/constants.dart';
+import 'package:intl/intl.dart';
+
+String date = DateFormat("dd-MM-yyyy").format(DateTime.now());
 
 List<Session> sessionByPin;
 
-Future<List<Session>> fetchDataBySessions(String pincode) async {
+// ignore: missing_return
+Future<List<Session>> fetchDataByPincodeApi(String pincode) async {
   print(pincode);
+  print(date);
 
-  String sessionByDistrict =
-      "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByPin?pincode=$pincode&date=19-05-2021";
-
-  http.Response response = await http.get(Uri.parse(sessionByDistrict));
+  http.Response response = await http
+      .get(Uri.parse(sessionByPincodeApi + "pincode=$pincode&date=$date"));
 
   if (response.statusCode == 200) {
     Map sessionsData = jsonDecode(response.body);
     List<dynamic> data = sessionsData['sessions'];
 
-    print('Sessions');
-
-    print(data);
-
     sessionByPin = data.map((json) => Session.fromJson(json)).toList();
     return sessionByPin;
-  }
+  } else
+    Exception(response.statusCode);
+}
+
+List<Session> sessionByDistrict;
+
+// ignore: missing_return
+Future<List<Session>> fetchDataByDistrictApi(String districtId) async {
+  print(districtId);
+  print(date);
+
+  http.Response response = await http.get(
+      Uri.parse(sessionByDistrictApi + "district_id=$districtId&date=$date"));
+
+  if (response.statusCode == 200) {
+    Map sessionsData = jsonDecode(response.body);
+    List<dynamic> data = sessionsData['sessions'];
+
+    sessionByDistrict = data.map((json) => Session.fromJson(json)).toList();
+    return sessionByDistrict;
+  } else
+    Exception(response.statusCode);
 }
 
 class Session {
@@ -54,8 +74,8 @@ class Session {
   int centerId;
   String name;
   String address;
-  StateName stateName;
-  DistrictName districtName;
+  String stateName;
+  String districtName;
   String blockName;
   int pincode;
   String from;
@@ -77,8 +97,8 @@ class Session {
         centerId: json["center_id"],
         name: json["name"],
         address: json["address"],
-        stateName: stateNameValues.map[json["state_name"]],
-        districtName: districtNameValues.map[json["district_name"]],
+        stateName: json["state_name"],
+        districtName: json["district_name"],
         blockName: json["block_name"],
         pincode: json["pincode"],
         from: json["from"],
@@ -101,8 +121,8 @@ class Session {
         "center_id": centerId,
         "name": name,
         "address": address,
-        "state_name": stateNameValues.reverse[stateName],
-        "district_name": districtNameValues.reverse[districtName],
+        "state_name": stateName,
+        "district_name": districtName,
         "block_name": blockName,
         "pincode": pincode,
         "from": from,
@@ -126,22 +146,15 @@ enum Date { THE_31032021 }
 
 final dateValues = EnumValues({"31-03-2021": Date.THE_31032021});
 
-enum DistrictName { ALWAR }
-
-final districtNameValues = EnumValues({"Alwar": DistrictName.ALWAR});
-
 enum FeeType { FREE, PAID, EMPTY }
 
 final feeTypeValues =
     EnumValues({"": FeeType.EMPTY, "Free": FeeType.FREE, "Paid": FeeType.PAID});
 
-enum StateName { RAJASTHAN }
+enum Vaccine { COVISHIELD, COVAXIN }
 
-final stateNameValues = EnumValues({"Rajasthan": StateName.RAJASTHAN});
-
-enum Vaccine { COVISHIELD }
-
-final vaccineValues = EnumValues({"COVISHIELD": Vaccine.COVISHIELD});
+final vaccineValues =
+    EnumValues({"COVISHIELD": Vaccine.COVISHIELD, "COVAXIN": Vaccine.COVAXIN});
 
 class EnumValues<T> {
   Map<String, T> map;
