@@ -1,8 +1,10 @@
+import 'dart:convert';
+
 import 'package:cowin_portal/Screens/main_screen.dart';
-import 'package:cowin_portal/Widgets/drop_down_button.dart';
-import 'package:cowin_portal/Widgets/newdropdown.dart';
+import 'package:cowin_portal/Widgets/drop_downs.dart';
 import 'package:cowin_portal/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 TextEditingController pincodeText = TextEditingController();
 
@@ -19,8 +21,19 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   Widget build(BuildContext context) {
-    String dropDownValueState;
-    String dropDownValueDisctrict;
+    String errorMessageFuture;
+    String errorMessage;
+    Future<String> checkPincode(String value) async {
+      http.Response response = await http.get(Uri.parse(pincodeApi + value));
+      if (jsonDecode(response.body)[0]['Status'] == "Error") {
+        print('Wrong pincode');
+        return 'Wrong';
+      } else {
+        print('Right pincode');
+        return "Right";
+      }
+    }
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -63,9 +76,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 child: Column(
                   children: [
                     TextField(
+                      // onSubmitted: (value) async {
+                      //   errorMessageFuture = await checkPincode(value);
+                      //   setState(() {
+                      //     errorMessage = errorMessageFuture;
+                      //   });
+
+                      //   print(errorMessageFuture);
+                      // },
                       controller: pincodeText,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
+                        errorText: errorMessage,
                         contentPadding: EdgeInsets.only(left: 18, bottom: 12),
                         labelText: 'Enter your Pincode',
                         labelStyle: TextStyle(fontSize: 18),
@@ -84,25 +106,24 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     SizedBox(
                       height: 40,
                     ),
-                    NewDrop(),
-                    SizedBox(
-                      height: 30,
-                    ),
+                    DropDowns(),
                     SizedBox(
                       height: 83,
                     ),
                     Container(
                       decoration: BoxDecoration(
-                          color: kcolorYellow,
-                          borderRadius: BorderRadius.circular(10)),
-                      // height: 51,
+                        color: kcolorYellow,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                       width: double.infinity,
                       child: TextButton(
                         onPressed: () {
-                          Navigator.pushReplacement(
+                          print(pincodeText.text);
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => MainScreen(),
+                              builder: (context) =>
+                                  MainScreen(pincodeText.text),
                             ),
                           );
                         },
@@ -117,7 +138,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               color: kcolorBlue),
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),

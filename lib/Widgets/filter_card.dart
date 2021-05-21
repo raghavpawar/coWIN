@@ -5,7 +5,7 @@ class FilterCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(left: 38, top: 25),
+      padding: EdgeInsets.only(left: 17, top: 25),
       child: Column(
         children: [
           FilterTile(
