@@ -1,26 +1,43 @@
-import 'package:cowin_portal/constants.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:cowin_portal/Widgets/filter_card_buttons.dart';
+
+import 'package:intl/intl.dart';
 
 class FilterCard extends StatelessWidget {
   @override
+  List<String> dates = [];
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(left: 17, top: 25),
-      child: Column(
-        children: [
-          FilterTile(
-            text: 'Date:',
-          ),
-          FilterTile(
-            text: 'Age:',
-          ),
-          FilterTile(
-            text: 'Vaccine:',
-          ),
-          FilterTile(
-            text: 'Price:',
-          )
-        ],
+    for (int i = 0; i <= 7; i++) {
+      dates.add(
+          DateFormat.yMMMd().format(DateTime.now().add(Duration(days: i))));
+    }
+
+    print(dates);
+    return SafeArea(
+      child: Container(
+        padding: EdgeInsets.all(20),
+        child: Column(
+          children: [
+            FilterButtons(
+              text: 'Date :       ',
+              times: 7,
+              data: dates,
+              selectedIndex: 0,
+            ),
+            FilterButtons(
+              text: 'Age :         ',
+              times: 2,
+              data: ['18+', '45+'],
+            ),
+            FilterButtons(
+                text: 'Vaccine :',
+                times: 3,
+                data: ['Covaxin', 'Covishield', 'Sputnik']),
+            FilterButtons(
+                text: 'Price :      ', times: 2, data: ['Free', 'Paid']),
+          ],
+        ),
       ),
     );
   }
@@ -32,32 +49,16 @@ class FilterTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 22),
-      child: Row(
-        children: [
-          Text(
-            text,
-            style: TextStyle(fontSize: 18),
-          ),
-          Container(
-            margin: EdgeInsets.only(left: 30),
-            width: 104,
-            height: 31,
-            decoration: BoxDecoration(
-              color: kcolorBlue,
-              borderRadius: BorderRadius.circular(10),
-              // border: Border.all(color: kcolorYellow, width: 3),
-            ),
-            child: Center(
-              child: Text(
-                '12 May, 2021',
-                style: TextStyle(fontSize: 14, color: Colors.white),
-              ),
-            ),
-          ),
-        ],
-      ),
+    return Row(
+      children: [
+        Text(
+          text,
+          style: TextStyle(fontSize: 20),
+        ),
+        SizedBox(
+          width: 20,
+        ),
+      ],
     );
   }
 }
