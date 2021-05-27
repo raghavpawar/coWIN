@@ -5,7 +5,6 @@ import 'package:cowin_portal/Widgets/drop_downs.dart';
 import 'package:cowin_portal/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:cowin_portal/Widgets/show_progress.dart';
 
 TextEditingController pincodeText = TextEditingController();
 

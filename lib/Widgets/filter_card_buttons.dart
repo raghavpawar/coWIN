@@ -10,17 +10,24 @@ class FilterButtons extends StatefulWidget {
   final int times;
   final List<String> data;
   final int selectedIndex;
+  final int minimumFilterAllowed;
 
-  FilterButtons({this.text, this.times, this.data, this.selectedIndex});
+  FilterButtons(
+      {this.text,
+      this.times,
+      this.data,
+      this.selectedIndex,
+      this.minimumFilterAllowed});
 
   @override
-  _FilterButtonsState createState() =>
-      _FilterButtonsState(selectedIndex: selectedIndex);
+  _FilterButtonsState createState() => _FilterButtonsState(
+      selectedIndex: selectedIndex, minimumFilterAllowed: minimumFilterAllowed);
 }
 
 class _FilterButtonsState extends State<FilterButtons> {
   int selectedIndex;
-  _FilterButtonsState({this.selectedIndex});
+  int minimumFilterAllowed;
+  _FilterButtonsState({this.selectedIndex, this.minimumFilterAllowed});
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -47,7 +54,15 @@ class _FilterButtonsState extends State<FilterButtons> {
                             ElevatedButton(
                               onPressed: () {
                                 setState(() {
-                                  selectedIndex = index;
+                                  print(minimumFilterAllowed);
+                                  if (minimumFilterAllowed == 0) {
+                                    if (selectedIndex != index)
+                                      selectedIndex = index;
+                                    else
+                                      selectedIndex = null;
+                                  } else {
+                                    selectedIndex = index;
+                                  }
                                 });
                                 // Respond to button press
                               },
