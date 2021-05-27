@@ -23,18 +23,25 @@ class FilterCard extends StatelessWidget {
               times: 7,
               data: dates,
               selectedIndex: 0,
+              minimumFilterAllowed: 1,
             ),
             FilterButtons(
               text: 'Age :         ',
               times: 2,
               data: ['18+', '45+'],
+              minimumFilterAllowed: 0,
             ),
             FilterButtons(
                 text: 'Vaccine :',
                 times: 3,
                 data: ['Covaxin', 'Covishield', 'Sputnik V']),
+
             FilterButtons(
-                text: 'Price :      ', times: 2, data: ['Free', 'Paid']),
+              text: 'Price :      ',
+              times: 2,
+              data: ['Free', 'Paid'],
+              minimumFilterAllowed: 0,
+            ),
           ],
         ),
       ),
