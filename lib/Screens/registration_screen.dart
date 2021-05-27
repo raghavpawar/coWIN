@@ -20,22 +20,23 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     pincodeText.dispose();
   }
 
-  String errorMessage = null;
+  String errorMessage;
   bool _isButtonDisabled = false;
   bool loading = true;
 
   Widget build(BuildContext context) {
     Future<String> checkPincode(String value) async {
       http.Response response = await http.get(Uri.parse(pincodeApi + value));
-      if (jsonDecode(response.body)[0]['Status'] == "Error") {
-        print('Wrong pincode');
+      if (jsonDecode(response.body)[0]['Status'] == "Error" ||
+          jsonDecode(response.body)[0]['Status'] == null) {
+        // print('Wrong pincode');
         setState(() {
-          errorMessage = 'Wrong';
+          errorMessage = 'Invalid Pincode!';
           _isButtonDisabled = false;
         });
         return 'Wrong';
       } else {
-        print('Right pincode');
+        // print('Right pincode');
         setState(() {
           errorMessage = null;
           _isButtonDisabled = true;
@@ -91,8 +92,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           buildShowDialog(context);
                           await checkPincode(value);
                           Navigator.pop(context);
-
-                          print(errorMessage);
                         },
                         controller: pincodeText,
                         keyboardType: TextInputType.number,
@@ -129,7 +128,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           child: TextButton(
                             onPressed: this._isButtonDisabled
                                 ? () {
-                                    print(pincodeText.text);
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(

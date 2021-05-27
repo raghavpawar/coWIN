@@ -13,7 +13,6 @@ class FilterCard extends StatelessWidget {
           DateFormat.yMMMd().format(DateTime.now().add(Duration(days: i))));
     }
 
-    print(dates);
     return SafeArea(
       child: Container(
         padding: EdgeInsets.all(20),
@@ -33,11 +32,10 @@ class FilterCard extends StatelessWidget {
               minimumFilterAllowed: 0,
             ),
             FilterButtons(
-              text: 'Vaccine :',
-              times: 3,
-              data: ['Covaxin', 'Covishield', 'Sputnik'],
-              minimumFilterAllowed: 0,
-            ),
+                text: 'Vaccine :',
+                times: 3,
+                data: ['Covaxin', 'Covishield', 'Sputnik V']),
+
             FilterButtons(
               text: 'Price :      ',
               times: 2,

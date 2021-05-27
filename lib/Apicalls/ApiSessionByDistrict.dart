@@ -10,9 +10,6 @@ List<Session> sessionByPin;
 
 // ignore: missing_return
 Future<List<Session>> fetchDataByPincodeApi(String pincode) async {
-  print(pincode);
-  print(date);
-
   http.Response response = await http
       .get(Uri.parse(sessionByPincodeApi + "pincode=$pincode&date=$date"));
 
@@ -30,9 +27,6 @@ List<Session> sessionByDistrict;
 
 // ignore: missing_return
 Future<List<Session>> fetchDataByDistrictApi(String districtId) async {
-  print(districtId);
-  print(date);
-
   http.Response response = await http.get(
       Uri.parse(sessionByDistrictApi + "district_id=$districtId&date=$date"));
 
