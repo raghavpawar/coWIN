@@ -40,7 +40,6 @@ class DistrictDropDown extends StatelessWidget {
                   ),
                   onChanged: onChangedCallback,
                   items: citiesList?.map<DropdownMenuItem<String>>((item) {
-                        print(item.districtId.toString());
                         return new DropdownMenuItem(
                           child: new Text(
                             item.districtName.toString(),
