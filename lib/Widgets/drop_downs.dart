@@ -1,4 +1,5 @@
 import 'package:cowin_portal/Screens/registration_screen.dart';
+import 'package:cowin_portal/Utils/district_id_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -8,6 +9,7 @@ import 'package:cowin_portal/Apicalls/ApiByState.dart';
 import 'package:cowin_portal/Apicalls/ApiByDistrict.dart';
 import 'state_drop_down.dart';
 import 'district_drop_down.dart';
+import 'package:provider/provider.dart';
 
 String _myState;
 String _myCity;
@@ -25,7 +27,6 @@ class _DropDownsState extends State<DropDowns> {
     statesList = [];
 
     http.Response response = await http.get(Uri.parse(stateDataApi));
-    print(response.statusCode);
     if (response.statusCode == 200) {
       Map districtData = jsonDecode(response.body);
 
@@ -93,8 +94,8 @@ class _DropDownsState extends State<DropDowns> {
             setState(() {
               _myCity = newValue != null ? newValue : null;
               pincodeText.clear();
-
-              print(_myCity);
+              Provider.of<DistrictIdData>(context, listen: false)
+                  .initialize(_myCity);
             });
           },
         )

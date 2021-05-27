@@ -1,12 +1,11 @@
 import 'package:cowin_portal/Apicalls/ApiSessionByDistrict.dart';
+import 'package:cowin_portal/Utils/district_id_data.dart';
 import 'package:cowin_portal/Widgets/filter_card.dart';
 import 'package:cowin_portal/Widgets/vaccine_list.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DistrictScreen extends StatelessWidget {
-  // final String districtId;
-  // DistrictScreen({@required this.districtId});
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -15,7 +14,8 @@ class DistrictScreen extends StatelessWidget {
         children: [
           FilterCard(),
           FutureBuilder(
-              future: fetchDataByDistrictApi('704'),
+              future: fetchDataByDistrictApi(
+                  Provider.of<DistrictIdData>(context).recievedDistrictId),
               builder: (context, snapshot) {
                 if (snapshot.data == null) {
                   return Container(child: CircularProgressIndicator());
