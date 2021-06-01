@@ -5,6 +5,8 @@ import 'package:cowin_portal/Widgets/drop_downs.dart';
 import 'package:cowin_portal/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import 'package:cowin_portal/Utils/district_id_data.dart';
 
 TextEditingController pincodeText = TextEditingController();
 
@@ -21,25 +23,20 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   String errorMessage;
-  bool _isButtonDisabled = false;
-  bool loading = true;
 
   Widget build(BuildContext context) {
     Future<String> checkPincode(String value) async {
       http.Response response = await http.get(Uri.parse(pincodeApi + value));
       if (jsonDecode(response.body)[0]['Status'] == "Error" ||
-          jsonDecode(response.body)[0]['Status'] == null) {
-        // print('Wrong pincode');
+          jsonDecode(response.body)[0]['Status'] == "404") {
         setState(() {
           errorMessage = 'Invalid Pincode!';
-          _isButtonDisabled = false;
         });
         return 'Wrong';
       } else {
-        // print('Right pincode');
+        Provider.of<DistrictIdData>(context, listen: false).toggleButton();
         setState(() {
           errorMessage = null;
-          _isButtonDisabled = true;
         });
         return "Right";
       }
@@ -89,12 +86,32 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     children: [
                       TextField(
                         onSubmitted: (value) async {
+                          Provider.of<DistrictIdData>(context, listen: false)
+                              .nullifyState();
+                          Provider.of<DistrictIdData>(context, listen: false)
+                              .nullifyCity();
                           buildShowDialog(context);
                           await checkPincode(value);
                           Navigator.pop(context);
+                          if (Provider.of<DistrictIdData>(context,
+                                  listen: false)
+                              .isButtonEnabled) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  Provider.of<DistrictIdData>(context,
+                                          listen: false)
+                                      .initializePincode(pincodeText.text);
+                                  return MainScreen();
+                                },
+                              ),
+                            );
+                          }
                         },
                         controller: pincodeText,
                         keyboardType: TextInputType.number,
+                        textInputAction: TextInputAction.search,
                         decoration: InputDecoration(
                           errorText: this.errorMessage,
                           contentPadding: EdgeInsets.only(left: 18, bottom: 12),
@@ -126,13 +143,20 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           ),
                           width: double.infinity,
                           child: TextButton(
-                            onPressed: this._isButtonDisabled
+                            onPressed: Provider.of<DistrictIdData>(
+                              context,
+                            ).isButtonEnabled
                                 ? () {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            MainScreen(pincodeText.text),
+                                        builder: (context) {
+                                          Provider.of<DistrictIdData>(context,
+                                                  listen: false)
+                                              .initializePincode(
+                                                  pincodeText.text);
+                                          return MainScreen();
+                                        },
                                       ),
                                     );
                                   }

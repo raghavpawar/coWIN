@@ -4,6 +4,8 @@ import 'package:cowin_portal/Widgets/filter_card.dart';
 import 'package:cowin_portal/constants.dart';
 
 import '../constants.dart';
+import 'package:provider/provider.dart';
+import 'package:cowin_portal/Utils/district_id_data.dart';
 
 class FilterButtons extends StatefulWidget {
   final String text;
@@ -30,6 +32,78 @@ class _FilterButtonsState extends State<FilterButtons> {
   _FilterButtonsState({this.selectedIndex, this.minimumFilterAllowed});
   @override
   Widget build(BuildContext context) {
+    void filterFunctionCall(String value) {
+      if (widget.text.contains('Date')) {
+        Provider.of<DistrictIdData>(context, listen: false).changeDate(value);
+      }
+      if (widget.text.contains('Age')) {
+        if (selectedIndex != null) {
+          Provider.of<DistrictIdData>(context, listen: false)
+              .applyAgeFilter(value);
+          if (Provider.of<DistrictIdData>(context, listen: false).counter ==
+                  0 ||
+              ((Provider.of<DistrictIdData>(context, listen: false).counter ==
+                          1 ||
+                      Provider.of<DistrictIdData>(context, listen: false)
+                              .counter ==
+                          2) &&
+                  Provider.of<DistrictIdData>(context, listen: false)
+                          .ageCounter ==
+                      0)) {
+            Provider.of<DistrictIdData>(context, listen: false)
+                .increaseCounter();
+            Provider.of<DistrictIdData>(context, listen: false)
+                .increaseAgeCounter();
+          }
+        } else
+          Provider.of<DistrictIdData>(context, listen: false).nullifyAge();
+      }
+      if (widget.text.contains('Vaccine')) {
+        if (selectedIndex != null) {
+          Provider.of<DistrictIdData>(context, listen: false)
+              .applyVaccineFilter(value);
+          if (Provider.of<DistrictIdData>(context, listen: false).counter ==
+                  0 ||
+              ((Provider.of<DistrictIdData>(context, listen: false).counter ==
+                          1 ||
+                      Provider.of<DistrictIdData>(context, listen: false)
+                              .counter ==
+                          2) &&
+                  Provider.of<DistrictIdData>(context, listen: false)
+                          .vaccineCounter ==
+                      0)) {
+            Provider.of<DistrictIdData>(context, listen: false)
+                .increaseCounter();
+            Provider.of<DistrictIdData>(context, listen: false)
+                .increaseVaccineCounter();
+          }
+        } else
+          Provider.of<DistrictIdData>(context, listen: false).nullifyVaccine();
+      }
+      if (widget.text.contains('Price')) {
+        if (selectedIndex != null) {
+          Provider.of<DistrictIdData>(context, listen: false)
+              .applyPriceFilter(value);
+          if (Provider.of<DistrictIdData>(context, listen: false).counter ==
+                  0 ||
+              ((Provider.of<DistrictIdData>(context, listen: false).counter ==
+                          1 ||
+                      Provider.of<DistrictIdData>(context, listen: false)
+                              .counter ==
+                          2) &&
+                  Provider.of<DistrictIdData>(context, listen: false)
+                          .priceCounter ==
+                      0)) {
+            Provider.of<DistrictIdData>(context, listen: false)
+                .increaseCounter();
+            Provider.of<DistrictIdData>(context, listen: false)
+                .increasePriceCounter();
+          }
+        } else
+          Provider.of<DistrictIdData>(context, listen: false).nullifyPrice();
+      }
+    }
+
     return Row(
       children: [
         FilterTile(
@@ -54,14 +128,20 @@ class _FilterButtonsState extends State<FilterButtons> {
                             ElevatedButton(
                               onPressed: () {
                                 setState(() {
-                                  print(minimumFilterAllowed);
                                   if (minimumFilterAllowed == 0) {
-                                    if (selectedIndex != index)
+                                    if (selectedIndex != index) {
                                       selectedIndex = index;
-                                    else
+                                      filterFunctionCall(
+                                          widget.data[index].toString());
+                                    } else {
                                       selectedIndex = null;
+                                      filterFunctionCall(
+                                          widget.data[index].toString());
+                                    }
                                   } else {
                                     selectedIndex = index;
+                                    filterFunctionCall(
+                                        widget.data[index].toString());
                                   }
                                 });
                                 // Respond to button press

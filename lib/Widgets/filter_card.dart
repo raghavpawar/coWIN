@@ -9,8 +9,8 @@ class FilterCard extends StatelessWidget {
   List<String> dates = [];
   Widget build(BuildContext context) {
     for (int i = 0; i <= 7; i++) {
-      dates.add(
-          DateFormat.yMMMd().format(DateTime.now().add(Duration(days: i))));
+      dates.add(DateFormat('dd-MM-yyyy')
+          .format(DateTime.now().add(Duration(days: i))));
     }
 
     return SafeArea(
@@ -32,10 +32,11 @@ class FilterCard extends StatelessWidget {
               minimumFilterAllowed: 0,
             ),
             FilterButtons(
-                text: 'Vaccine :',
-                times: 3,
-                data: ['Covaxin', 'Covishield', 'Sputnik V']),
-
+              text: 'Vaccine :',
+              times: 3,
+              data: ['Covaxin', 'Covishield', 'Sputnik V'],
+              minimumFilterAllowed: 0,
+            ),
             FilterButtons(
               text: 'Price :      ',
               times: 2,

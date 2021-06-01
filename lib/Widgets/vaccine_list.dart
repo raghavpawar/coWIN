@@ -67,7 +67,9 @@ class VaccineCard extends StatelessWidget {
                 children: [
                   Container(
                     decoration: BoxDecoration(
-                      color: Color(0xff00DC65),
+                      color: availableCapacity <= 10
+                          ? kcolorYellow
+                          : Color(0xff00DC65),
                       borderRadius: BorderRadius.all(
                         Radius.circular(10),
                       ),
@@ -99,7 +101,7 @@ class VaccineCard extends StatelessWidget {
                     "Age $minAgeLimit+",
                     style: TextStyle(
                       color: Color(0xffE93535),
-                      fontSize: 10,
+                      fontSize: 12,
                       fontFamily: 'Roboto',
                     ),
                   ),

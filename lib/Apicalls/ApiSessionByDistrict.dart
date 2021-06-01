@@ -2,14 +2,13 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:cowin_portal/constants.dart';
-import 'package:intl/intl.dart';
 
-String date = DateFormat("dd-MM-yyyy").format(DateTime.now());
+// String date = DateFormat("dd-MM-yyyy").format(DateTime.now());
 
 List<Session> sessionByPin;
 
 // ignore: missing_return
-Future<List<Session>> fetchDataByPincodeApi(String pincode) async {
+Future<List<Session>> fetchDataByPincodeApi(String pincode, String date) async {
   http.Response response = await http
       .get(Uri.parse(sessionByPincodeApi + "pincode=$pincode&date=$date"));
 
@@ -26,7 +25,8 @@ Future<List<Session>> fetchDataByPincodeApi(String pincode) async {
 List<Session> sessionByDistrict;
 
 // ignore: missing_return
-Future<List<Session>> fetchDataByDistrictApi(String districtId) async {
+Future<List<Session>> fetchDataByDistrictApi(
+    String districtId, String date) async {
   http.Response response = await http.get(
       Uri.parse(sessionByDistrictApi + "district_id=$districtId&date=$date"));
 
@@ -140,10 +140,9 @@ enum Date { THE_31032021 }
 
 final dateValues = EnumValues({"31-03-2021": Date.THE_31032021});
 
-enum FeeType { FREE, PAID, EMPTY }
+enum FeeType { FREE, PAID }
 
-final feeTypeValues =
-    EnumValues({"": FeeType.EMPTY, "Free": FeeType.FREE, "Paid": FeeType.PAID});
+final feeTypeValues = EnumValues({"Free": FeeType.FREE, "Paid": FeeType.PAID});
 
 enum Vaccine { COVISHIELD, COVAXIN }
 
