@@ -11,9 +11,6 @@ import 'state_drop_down.dart';
 import 'district_drop_down.dart';
 import 'package:provider/provider.dart';
 
-String _myState;
-String _myCity;
-
 class DropDowns extends StatefulWidget {
   @override
   _DropDownsState createState() => _DropDownsState();
@@ -68,38 +65,40 @@ class _DropDownsState extends State<DropDowns> {
   }
 
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        StateDropDown(
-          myState: _myState,
-          statesList: statesList,
-          onChangedCallback: (String newValue) {
-            setState(() {
-              _myState = newValue;
-              pincodeText.clear();
-
-              _myCity = null;
-
-              fetchDistrictData(_myState.toString());
-            });
-          },
-        ),
-        SizedBox(
-          height: 30,
-        ),
-        DistrictDropDown(
-          citiesList: citiesList,
-          myCity: _myCity,
-          onChangedCallback: (String newValue) {
-            setState(() {
-              _myCity = newValue != null ? newValue : null;
-              pincodeText.clear();
-              Provider.of<DistrictIdData>(context, listen: false)
-                  .initialize(_myCity);
-            });
-          },
-        )
-      ],
+    return Consumer<DistrictIdData>(
+      builder: (context, data, child) {
+        return Column(
+          children: [
+            StateDropDown(
+              myState: data.myState,
+              statesList: statesList,
+              onChangedCallback: (String newValue) {
+                setState(() {
+                  data.initializeState(newValue);
+                  pincodeText.clear();
+                  data.nullifyCity();
+                  fetchDistrictData(data.myState);
+                });
+              },
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            DistrictDropDown(
+              citiesList: citiesList,
+              myCity: data.myCity,
+              onChangedCallback: (String newValue) {
+                setState(() {
+                  data.intializeCity(newValue);
+                  pincodeText.clear();
+                  data.initializeDistrictId(data.myCity);
+                  data.toggleButton();
+                });
+              },
+            )
+          ],
+        );
+      },
     );
   }
 }
