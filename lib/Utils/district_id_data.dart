@@ -15,6 +15,19 @@ class DistrictIdData extends ChangeNotifier {
   bool isButtonEnabled = false;
   String myState;
   String myCity;
+  String stateName;
+  String districtName;
+
+  void initializeStateName(String value) {
+    this.stateName = value;
+    print(stateName);
+    notifyListeners();
+  }
+
+  void initializeDistrictName(String value) {
+    this.districtName = value;
+    notifyListeners();
+  }
 
   void initializeState(String newValue) {
     if (newValue != null) {

@@ -28,7 +28,7 @@ class DistrictDropDown extends StatelessWidget {
                 child: DropdownButton<String>(
                   value: myCity != null ? myCity : null,
                   iconSize: 24,
-                  icon: (null),
+                  icon: Icon(Icons.keyboard_arrow_down),
                   style: TextStyle(
                       color: Colors.black, fontSize: 18, fontFamily: 'Roboto'),
                   hint: Text(

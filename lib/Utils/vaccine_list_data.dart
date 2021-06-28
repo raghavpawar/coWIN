@@ -1,8 +1,9 @@
+import 'package:cowin_portal/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cowin_portal/Utils/district_id_data.dart';
 import 'package:cowin_portal/Widgets/filter_card.dart';
-import 'package:cowin_portal/Widgets/vaccine_list.dart';
+import 'package:cowin_portal/Widgets/vaccine_card.dart';
 
 class VaccineListData extends StatelessWidget {
   final futureCallback;
@@ -22,6 +23,25 @@ class VaccineListData extends StatelessWidget {
                   builder: (context, snapshot) {
                     if (snapshot.data == null) {
                       return Container(child: CircularProgressIndicator());
+                    }
+
+                    if (snapshot.data.length == 0) {
+                      return Column(
+                        children: [
+                          SizedBox(
+                            height: 100,
+                          ),
+                          Text(
+                            'No Vaccination center is\navailable for booking.',
+                            style: TextStyle(
+                              fontFamily: 'Roboto',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 24,
+                              color: kcolorBlue,
+                            ),
+                          ),
+                        ],
+                      );
                     }
 
                     return ListView.builder(

@@ -15,30 +15,30 @@ class FilterCard extends StatelessWidget {
 
     return SafeArea(
       child: Container(
-        padding: EdgeInsets.all(20),
+        padding: EdgeInsets.only(left: 25, top: 25, bottom: 20),
         child: Column(
           children: [
             FilterButtons(
-              text: 'Date :       ',
+              text: 'Date       ',
               times: 7,
               data: dates,
               selectedIndex: 0,
               minimumFilterAllowed: 1,
             ),
             FilterButtons(
-              text: 'Age :         ',
+              text: 'Age        ',
               times: 2,
               data: ['18+', '45+'],
               minimumFilterAllowed: 0,
             ),
             FilterButtons(
-              text: 'Vaccine :',
+              text: 'Vaccine',
               times: 3,
               data: ['Covaxin', 'Covishield', 'Sputnik V'],
               minimumFilterAllowed: 0,
             ),
             FilterButtons(
-              text: 'Price :      ',
+              text: 'Price     ',
               times: 2,
               data: ['Free', 'Paid'],
               minimumFilterAllowed: 0,
@@ -60,7 +60,12 @@ class FilterTile extends StatelessWidget {
       children: [
         Text(
           text,
-          style: TextStyle(fontSize: 20),
+          style: TextStyle(
+            fontSize: 18,
+            color: Colors.black,
+            fontWeight: FontWeight.w400,
+            fontFamily: 'Roboto',
+          ),
         ),
         SizedBox(
           width: 20,

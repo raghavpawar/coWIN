@@ -125,47 +125,75 @@ class _FilterButtonsState extends State<FilterButtons> {
                       itemBuilder: (context, index) {
                         return Row(
                           children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                setState(() {
-                                  if (minimumFilterAllowed == 0) {
-                                    if (selectedIndex != index) {
+                            Container(
+                              decoration: selectedIndex != null &&
+                                      selectedIndex == index
+                                  ? null
+                                  : BoxDecoration(
+                                      boxShadow: [
+                                        BoxShadow(
+                                          blurRadius: 8,
+                                          spreadRadius: 0,
+                                          color: Colors.black.withOpacity(0.15),
+                                          offset: Offset(4, 6),
+                                        ),
+                                      ],
+                                    ),
+                              width: 108,
+                              height: widget.text.contains('Date') ? 35 : 32,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  setState(() {
+                                    if (minimumFilterAllowed == 0) {
+                                      if (selectedIndex != index) {
+                                        selectedIndex = index;
+                                        filterFunctionCall(
+                                            widget.data[index].toString());
+                                      } else {
+                                        selectedIndex = null;
+                                        filterFunctionCall(
+                                            widget.data[index].toString());
+                                      }
+                                    } else {
                                       selectedIndex = index;
                                       filterFunctionCall(
                                           widget.data[index].toString());
-                                    } else {
-                                      selectedIndex = null;
-                                      filterFunctionCall(
-                                          widget.data[index].toString());
                                     }
-                                  } else {
-                                    selectedIndex = index;
-                                    filterFunctionCall(
-                                        widget.data[index].toString());
-                                  }
-                                });
-                                // Respond to button press
-                              },
-                              child: Text(
-                                widget.data[index].toString(),
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.white,
-                                  fontFamily: 'sora',
-                                ),
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                  primary: kcolorBlue,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10)),
-                                  side: BorderSide(
-                                    color: kcolorYellow,
-                                    width: selectedIndex != null &&
+                                  });
+                                  // Respond to button press
+                                },
+                                child: Text(
+                                  widget.data[index].toString(),
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: selectedIndex != null &&
                                             selectedIndex == index
-                                        ? 3
-                                        : 1,
-                                  )),
-                            ),
+                                        ? Colors.white
+                                        : kcolorBlue,
+                                    fontFamily: 'sora',
+                                    fontWeight: selectedIndex != null &&
+                                            selectedIndex == index
+                                        ? null
+                                        : FontWeight.w300,
+                                  ),
+                                ), //Button Text
+                                style: ElevatedButton.styleFrom(
+                                    elevation: 0,
+                                    primary: selectedIndex != null &&
+                                            selectedIndex == index
+                                        ? kcolorBlue
+                                        : kcolorWhite,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(4)),
+                                    side: BorderSide(
+                                      color: kcolorBlue,
+                                      width: selectedIndex != null &&
+                                              selectedIndex == index
+                                          ? 0
+                                          : 1.5,
+                                    )),
+                              ),
+                            ), //Button Style
                             SizedBox(
                               width: 10,
                             )
