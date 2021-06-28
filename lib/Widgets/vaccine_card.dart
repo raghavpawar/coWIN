@@ -1,4 +1,4 @@
-import 'package:cowin_portal/Apicalls/ApiSessionByDistrict.dart';
+import 'package:cowin_portal/Apicalls/ApiSessions.dart';
 import 'package:cowin_portal/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -90,7 +90,13 @@ class VaccineCard extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    vaccine.toString().split('.').last,
+                    vaccine
+                        .toString()
+                        .split('.')
+                        .last
+                        .replaceFirst('COVAXIN', 'Covaxin')
+                        .replaceFirst('COVISHIELD', 'Covishield')
+                        .replaceFirst('SPUTNIK V', 'Sputnik V'),
                     style: TextStyle(
                       fontSize: 12,
                       color: Colors.white,
@@ -100,7 +106,7 @@ class VaccineCard extends StatelessWidget {
                   Text(
                     "Age $minAgeLimit+",
                     style: TextStyle(
-                      color: Color(0xffE93535),
+                      color: Color(0xffFF2323),
                       fontSize: 12,
                       fontFamily: 'Roboto',
                     ),

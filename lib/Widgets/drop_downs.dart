@@ -82,7 +82,7 @@ class _DropDownsState extends State<DropDowns> {
               },
             ),
             SizedBox(
-              height: 30,
+              height: 20,
             ),
             DistrictDropDown(
               citiesList: citiesList,

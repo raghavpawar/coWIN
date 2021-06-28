@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 final kcolorBlue = Color(0xFF081F5C);
 final kcolorYellow = Color(0xFFF3BF41);
+final kcolorWhite = Color(0xFFFDFDFD);
 
 const String stateDataApi =
     "https://cdn-api.co-vin.in/api/v2/admin/location/states";

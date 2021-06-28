@@ -28,7 +28,7 @@ class StateDropDown extends StatelessWidget {
               elevation: 20,
               value: myState != null ? myState : null,
               iconSize: 24,
-              icon: (null),
+              icon: Icon(Icons.keyboard_arrow_down),
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 16,

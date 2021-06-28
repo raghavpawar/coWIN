@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:cowin_portal/Utils/district_id_data.dart';
+import 'package:cowin_portal/Widgets/search_button.dart';
 
 TextEditingController pincodeText = TextEditingController();
 
@@ -42,144 +43,140 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       }
     }
 
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Stack(
-                  alignment: Alignment.center,
+    return Consumer<DistrictIdData>(
+      builder: (context, data, child) {
+        return GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Scaffold(
+            backgroundColor: kcolorWhite,
+            resizeToAvoidBottomInset: false,
+            body: SafeArea(
+              child: SingleChildScrollView(
+                child: Column(
                   children: [
-                    Text(
-                      'coWIN',
-                      style: TextStyle(
-                          fontSize: 48,
-                          fontWeight: FontWeight.bold,
-                          color: kcolorBlue),
-                    ),
-                    Opacity(
-                      opacity: 0.23,
-                      child: Container(
-                        height: 262,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(40),
-                              bottomRight: Radius.circular(40)),
-                          image: DecorationImage(
-                            fit: BoxFit.fitWidth,
-                            image: AssetImage('images/vaccine1.jpg'),
-                          ),
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Text(
+                          'coWIN',
+                          style: TextStyle(
+                              fontSize: 48,
+                              fontWeight: FontWeight.bold,
+                              color: kcolorBlue),
                         ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 52,
-                ),
-                Container(
-                  margin: EdgeInsets.only(left: 15, right: 15),
-                  child: Column(
-                    children: [
-                      TextField(
-                        onSubmitted: (value) async {
-                          Provider.of<DistrictIdData>(context, listen: false)
-                              .nullifyState();
-                          Provider.of<DistrictIdData>(context, listen: false)
-                              .nullifyCity();
-                          buildShowDialog(context);
-                          await checkPincode(value);
-                          Navigator.pop(context);
-                          if (Provider.of<DistrictIdData>(context,
-                                  listen: false)
-                              .isButtonEnabled) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  Provider.of<DistrictIdData>(context,
-                                          listen: false)
-                                      .initializePincode(pincodeText.text);
-                                  return MainScreen();
-                                },
+                        Opacity(
+                          opacity: 0.23,
+                          child: Container(
+                            height: 262,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(20),
+                                  bottomRight: Radius.circular(20)),
+                              image: DecorationImage(
+                                fit: BoxFit.fitWidth,
+                                image: AssetImage('images/vaccine1.jpg'),
                               ),
-                            );
-                          }
-                        },
-                        controller: pincodeText,
-                        keyboardType: TextInputType.number,
-                        textInputAction: TextInputAction.search,
-                        decoration: InputDecoration(
-                          errorText: this.errorMessage,
-                          contentPadding: EdgeInsets.only(left: 18, bottom: 12),
-                          labelText: 'Enter your Pincode',
-                          labelStyle: TextStyle(fontSize: 18),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 40,
-                      ),
-                      Text(
-                        'OR',
-                        style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w600,
-                            color: kcolorBlue),
-                      ),
-                      SizedBox(
-                        height: 40,
-                      ),
-                      DropDowns(),
-                      SizedBox(
-                        height: 83,
-                      ),
-                      Container(
-                          decoration: BoxDecoration(
-                            color: kcolorYellow,
-                            borderRadius: BorderRadius.circular(10),
+                            ),
                           ),
-                          width: double.infinity,
-                          child: TextButton(
-                            onPressed: Provider.of<DistrictIdData>(
-                              context,
-                            ).isButtonEnabled
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 52,
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 15, right: 15),
+                      child: Column(
+                        children: [
+                          TextField(
+                            onSubmitted: (value) async {
+                              data.nullifyState();
+                              data.nullifyCity();
+                              buildShowDialog(context);
+                              await checkPincode(value);
+                              Navigator.pop(context);
+                              if (data.isButtonEnabled) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      data.initializePincode(pincodeText.text);
+                                      return MainScreen();
+                                    },
+                                  ),
+                                );
+                              }
+                            },
+                            controller: pincodeText,
+                            keyboardType: TextInputType.number,
+                            textInputAction: TextInputAction.search,
+                            decoration: InputDecoration(
+                              errorText: this.errorMessage,
+                              contentPadding:
+                                  EdgeInsets.only(left: 18, bottom: 12),
+                              labelText: 'Enter your Pincode',
+                              labelStyle: TextStyle(
+                                fontSize: 16,
+                                color: Color(0xFF575757),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 40,
+                          ),
+                          Text(
+                            'OR',
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                color: kcolorBlue),
+                          ),
+                          SizedBox(
+                            height: 27,
+                          ),
+                          DropDowns(),
+                          SizedBox(
+                            height: 55,
+                          ),
+                          SearchButton(
+                            buttonText: 'Search',
+                            color: kcolorYellow,
+                            textColor: kcolorBlue,
+                            onPressedCallback: data.isButtonEnabled
                                 ? () {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) {
-                                          Provider.of<DistrictIdData>(context,
-                                                  listen: false)
-                                              .initializePincode(
-                                                  pincodeText.text);
+                                          data.initializePincode(
+                                              pincodeText.text);
                                           return MainScreen();
                                         },
                                       ),
                                     );
                                   }
                                 : null,
-                            style: TextButton.styleFrom(
-                              padding: EdgeInsets.all(11),
-                            ),
-                            child: Text(
-                              'Search',
-                              style: TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w600,
-                                  color: kcolorBlue),
-                            ),
-                          )),
-                    ],
-                  ),
+                          ),
+                          SizedBox(
+                            height: 24,
+                          ),
+                          SearchButton(
+                            buttonText: 'Search by Map',
+                            color: kcolorBlue,
+                            textColor: Color(0xfffbfbfb),
+                            icon: Icons.my_location,
+                            onPressedCallback: null,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
