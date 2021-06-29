@@ -1,13 +1,13 @@
-import 'dart:convert';
-
+import 'package:cowin_portal/Networking/check_internet.dart';
 import 'package:cowin_portal/Screens/main_screen.dart';
+import 'package:cowin_portal/Screens/no_internet_screen.dart';
 import 'package:cowin_portal/Widgets/drop_downs.dart';
 import 'package:cowin_portal/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-import 'package:cowin_portal/Utils/district_id_data.dart';
+import 'package:cowin_portal/Provider/district_id_data.dart';
 import 'package:cowin_portal/Widgets/search_button.dart';
+import 'package:cowin_portal/Networking/check_pincode.dart';
 
 TextEditingController pincodeText = TextEditingController();
 
@@ -26,20 +26,33 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   String errorMessage;
 
   Widget build(BuildContext context) {
-    Future<String> checkPincode(String value) async {
-      http.Response response = await http.get(Uri.parse(pincodeApi + value));
-      if (jsonDecode(response.body)[0]['Status'] == "Error" ||
-          jsonDecode(response.body)[0]['Status'] == "404") {
-        setState(() {
-          errorMessage = 'Invalid Pincode!';
-        });
-        return 'Wrong';
-      } else {
-        Provider.of<DistrictIdData>(context, listen: false).toggleButton();
+    void hasInternet(value) async {
+      buildShowDialog(context);
+      bool isPincodeCorrect = await checkPincode(value);
+      if (isPincodeCorrect) {
+        Navigator.pop(context);
         setState(() {
           errorMessage = null;
         });
-        return "Right";
+        Provider.of<DistrictIdData>(context, listen: false).toggleButton();
+        if (Provider.of<DistrictIdData>(context, listen: false)
+            .isButtonEnabled) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                Provider.of<DistrictIdData>(context, listen: false)
+                    .initializePincode(pincodeText.text);
+                return MainScreen();
+              },
+            ),
+          );
+        }
+      } else {
+        Navigator.pop(context);
+        setState(() {
+          errorMessage = "Invalid Pincode!";
+        });
       }
     }
 
@@ -92,20 +105,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             onSubmitted: (value) async {
                               data.nullifyState();
                               data.nullifyCity();
-                              buildShowDialog(context);
-                              await checkPincode(value);
-                              Navigator.pop(context);
-                              if (data.isButtonEnabled) {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      data.initializePincode(pincodeText.text);
-                                      return MainScreen();
-                                    },
-                                  ),
-                                );
-                              }
+                              await checkInternet()
+                                  ? hasInternet(value)
+                                  : Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) {
+                                          return NoInternetScreen();
+                                        },
+                                      ),
+                                    );
                             },
                             controller: pincodeText,
                             keyboardType: TextInputType.number,

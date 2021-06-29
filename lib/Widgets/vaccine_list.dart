@@ -1,7 +1,7 @@
 import 'package:cowin_portal/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:cowin_portal/Utils/district_id_data.dart';
+import 'package:cowin_portal/Provider/district_id_data.dart';
 import 'package:cowin_portal/Widgets/filter_card.dart';
 import 'package:cowin_portal/Widgets/vaccine_card.dart';
 
@@ -80,7 +80,7 @@ class VaccineListData extends StatelessWidget {
                                               .toString()
                                               .substring(8) ==
                                           data.price)) {
-                                return callVaccineCardClass();
+                                callVaccineCardClass();
                               } else if (data.counter == 2 &&
                                   ((snapshot.data[index].minAgeLimit ==
                                               data.age &&
@@ -102,7 +102,7 @@ class VaccineListData extends StatelessWidget {
                                                   .toString()
                                                   .substring(8) ==
                                               data.vaccine))) {
-                                return callVaccineCardClass();
+                                callVaccineCardClass();
                               } else if (data.counter == 3 &&
                                   (snapshot.data[index].minAgeLimit ==
                                           data.age &&
@@ -114,16 +114,13 @@ class VaccineListData extends StatelessWidget {
                                               .toString()
                                               .substring(8) ==
                                           data.price)) {
-                                return callVaccineCardClass();
+                                callVaccineCardClass();
                               } else
                                 return SizedBox(height: 0, width: 0);
                             }
                             return callVaccineCardClass();
                           } else
-                            return SizedBox(
-                              height: 0,
-                              width: 0,
-                            );
+                            return SizedBox(height: 0, width: 0);
                         });
                   })
             ],

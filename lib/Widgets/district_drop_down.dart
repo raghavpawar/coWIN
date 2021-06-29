@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-import 'package:cowin_portal/Apicalls/ApiByDistrict.dart';
+import 'package:cowin_portal/JsonDecoder/DistrictListDecoder.dart';
 
 class DistrictDropDown extends StatelessWidget {
   const DistrictDropDown({
-    @required this.citiesList,
+    @required this.districtList,
     @required this.myCity,
     @required this.onChangedCallback,
   });
 
-  final List<District> citiesList;
+  final List<District> districtList;
   final String myCity;
   final Function onChangedCallback;
 
@@ -39,7 +39,7 @@ class DistrictDropDown extends StatelessWidget {
                     ),
                   ),
                   onChanged: onChangedCallback,
-                  items: citiesList?.map<DropdownMenuItem<String>>((item) {
+                  items: districtList?.map<DropdownMenuItem<String>>((item) {
                         return new DropdownMenuItem(
                           child: new Text(
                             item.districtName.toString(),

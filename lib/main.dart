@@ -1,5 +1,5 @@
 import 'package:cowin_portal/Screens/registration_screen.dart';
-import 'package:cowin_portal/Utils/district_id_data.dart';
+import 'package:cowin_portal/Provider/district_id_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'Screens/registration_screen.dart';

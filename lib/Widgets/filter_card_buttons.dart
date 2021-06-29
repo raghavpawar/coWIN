@@ -5,7 +5,7 @@ import 'package:cowin_portal/constants.dart';
 
 import '../constants.dart';
 import 'package:provider/provider.dart';
-import 'package:cowin_portal/Utils/district_id_data.dart';
+import 'package:cowin_portal/Provider/district_id_data.dart';
 
 class FilterButtons extends StatefulWidget {
   final String text;

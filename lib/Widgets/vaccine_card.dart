@@ -1,4 +1,4 @@
-import 'package:cowin_portal/Apicalls/ApiSessions.dart';
+import 'package:cowin_portal/JsonDecoder/SessionsDecoder.dart';
 import 'package:cowin_portal/constants.dart';
 import 'package:flutter/material.dart';
 

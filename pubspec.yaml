@@ -31,6 +31,7 @@ dependencies:
   intl: ^0.17.0
   provider: ^5.0.0
   http: ^0.13.3
+  connectivity_plus: ^1.0.4
 
 dev_dependencies:
   flutter_test:

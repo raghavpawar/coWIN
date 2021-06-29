@@ -1,12 +1,12 @@
 import 'package:cowin_portal/Screens/registration_screen.dart';
-import 'package:cowin_portal/Utils/district_id_data.dart';
+import 'package:cowin_portal/Provider/district_id_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:cowin_portal/constants.dart';
-import 'package:cowin_portal/Apicalls/ApiByState.dart';
-import 'package:cowin_portal/Apicalls/ApiByDistrict.dart';
+import 'package:cowin_portal/JsonDecoder/StateListDecoder.dart';
+import 'package:cowin_portal/JsonDecoder/DistrictListDecoder.dart';
 import 'state_drop_down.dart';
 import 'district_drop_down.dart';
 import 'package:provider/provider.dart';
@@ -85,7 +85,7 @@ class _DropDownsState extends State<DropDowns> {
               height: 20,
             ),
             DistrictDropDown(
-              citiesList: citiesList,
+              districtList: citiesList,
               myCity: data.myCity,
               onChangedCallback: (String newValue) {
                 setState(() {
