@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:cowin_portal/Apicalls/ApiByState.dart';
+import 'package:cowin_portal/JsonDecoder/StateListDecoder.dart';
 
 class StateDropDown extends StatelessWidget {
   const StateDropDown({

@@ -2,9 +2,10 @@ import 'package:cowin_portal/Screens/registration_screen.dart';
 import 'package:cowin_portal/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:cowin_portal/Utils/district_id_data.dart';
-import 'package:cowin_portal/Utils/vaccine_list_data.dart';
-import 'package:cowin_portal/Apicalls/ApiSessions.dart';
+import 'package:cowin_portal/Provider/district_id_data.dart';
+import 'package:cowin_portal/Widgets/vaccine_list.dart';
+import 'package:cowin_portal/Networking/data_by_district_api.dart';
+import 'package:cowin_portal/Networking/data_by_pincode_api.dart';
 
 class MainScreen extends StatefulWidget {
   @override
