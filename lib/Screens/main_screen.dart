@@ -97,7 +97,7 @@ class _MainScreenState extends State<MainScreen> {
                       flex: data.recievedPincode == "" ? 4 : 2,
                       child: Text(
                         data.recievedPincode == ""
-                            ? "Dehradun, Uttarakhand"
+                            ? '${data.cityName},${data.statename}'
                             : data.recievedPincode,
                         style: TextStyle(
                           fontSize: 16,
