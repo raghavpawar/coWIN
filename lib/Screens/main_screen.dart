@@ -22,6 +22,10 @@ class _MainScreenState extends State<MainScreen> {
         if (lastQuit == null ||
             DateTime.now().difference(lastQuit).inSeconds > 1) {
           pincodeText.clear();
+          Provider.of<DistrictIdData>(context, listen: false)
+              .intializeCity(null);
+          Provider.of<DistrictIdData>(context, listen: false)
+              .initializeState(null);
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             duration: Duration(seconds: 1),
             backgroundColor: kcolorYellow,
@@ -38,6 +42,7 @@ class _MainScreenState extends State<MainScreen> {
           return false;
         } else {
           Navigator.of(context).pop(true);
+
           return true;
         }
       },
@@ -97,7 +102,7 @@ class _MainScreenState extends State<MainScreen> {
                       flex: data.recievedPincode == "" ? 4 : 2,
                       child: Text(
                         data.recievedPincode == ""
-                            ? "Dehradun, Uttarakhand"
+                            ? '${data.cityName},${data.statename}'
                             : data.recievedPincode,
                         style: TextStyle(
                           fontSize: 16,

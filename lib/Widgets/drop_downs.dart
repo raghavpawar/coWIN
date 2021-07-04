@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cowin_portal/Screens/registration_screen.dart';
 import 'package:cowin_portal/Provider/district_id_data.dart';
 import 'package:flutter/cupertino.dart';
@@ -75,6 +77,9 @@ class _DropDownsState extends State<DropDowns> {
               onChangedCallback: (String newValue) {
                 setState(() {
                   data.initializeState(newValue);
+                  log(data.stateIdToStateName[newValue.toString()]);
+                  data.nameOfState(
+                      data.stateIdToStateName[newValue.toString()]);
                   pincodeText.clear();
                   data.nullifyCity();
                   fetchDistrictData(data.myState);
@@ -90,6 +95,8 @@ class _DropDownsState extends State<DropDowns> {
               onChangedCallback: (String newValue) {
                 setState(() {
                   data.intializeCity(newValue);
+                  data.nameOfCity(
+                      data.districtIdTodistrictName[newValue.toString()]);
                   pincodeText.clear();
                   data.initializeDistrictId(data.myCity);
                   data.toggleButton();

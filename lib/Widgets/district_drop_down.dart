@@ -1,6 +1,12 @@
+import 'dart:developer';
+
+import 'package:cowin_portal/Provider/district_id_data.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cowin_portal/JsonDecoder/DistrictListDecoder.dart';
+import 'package:provider/provider.dart';
+
+Map<String, String> districtMAp = {'-1': 'unknown'};
 
 class DistrictDropDown extends StatelessWidget {
   const DistrictDropDown({
@@ -11,10 +17,15 @@ class DistrictDropDown extends StatelessWidget {
 
   final List<District> districtList;
   final String myCity;
+
   final Function onChangedCallback;
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) =>
+        Provider.of<DistrictIdData>(context, listen: false)
+            .connectDistrictMap(districtMAp));
+
     return Container(
       padding: EdgeInsets.only(left: 15, right: 15, top: 5),
       color: Colors.white,
@@ -40,6 +51,8 @@ class DistrictDropDown extends StatelessWidget {
                   ),
                   onChanged: onChangedCallback,
                   items: districtList?.map<DropdownMenuItem<String>>((item) {
+                        districtMAp.putIfAbsent(item.districtId.toString(),
+                            () => item.districtName.toString());
                         return new DropdownMenuItem(
                           child: new Text(
                             item.districtName.toString(),

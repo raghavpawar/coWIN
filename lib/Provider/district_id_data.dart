@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 
@@ -17,6 +19,21 @@ class DistrictIdData extends ChangeNotifier {
   String myCity;
   String stateName;
   String districtName;
+  Map<String, String> districtIdTodistrictName = {'-1': 'unknown'};
+  Map<String, String> stateIdToStateName = {'-1': 'unknown'};
+  String cityName;
+  String statename;
+  void nameOfCity(String name) {
+    if (name != null) this.cityName = name;
+
+    notifyListeners();
+  }
+
+  void nameOfState(String name) {
+    if (name != null) this.statename = name;
+
+    notifyListeners();
+  }
 
   void initializeStateName(String value) {
     this.stateName = value;
@@ -32,6 +49,8 @@ class DistrictIdData extends ChangeNotifier {
   void initializeState(String newValue) {
     if (newValue != null) {
       this.myState = newValue;
+    } else {
+      myState = null;
     }
     notifyListeners();
   }
@@ -39,8 +58,18 @@ class DistrictIdData extends ChangeNotifier {
   void intializeCity(String newValue) {
     if (newValue != null) {
       this.myCity = newValue;
+    } else {
+      myCity = null;
     }
     notifyListeners();
+  }
+
+  void connectStateMap(Map<String, String> mp) {
+    if (mp != null) stateIdToStateName = mp;
+  }
+
+  void connectDistrictMap(Map<String, String> mp) {
+    if (mp != null) districtIdTodistrictName = mp;
   }
 
   void nullifyState() {
