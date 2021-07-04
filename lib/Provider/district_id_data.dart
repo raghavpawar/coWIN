@@ -49,8 +49,8 @@ class DistrictIdData extends ChangeNotifier {
   void initializeState(String newValue) {
     if (newValue != null) {
       this.myState = newValue;
-      // if (districtIdTodistrictName == null)
-      //   districtIdTodistrictName['-1'] = 'unknown';
+    } else {
+      myState = null;
     }
     notifyListeners();
   }
@@ -58,20 +58,8 @@ class DistrictIdData extends ChangeNotifier {
   void intializeCity(String newValue) {
     if (newValue != null) {
       this.myCity = newValue;
-    }
-    notifyListeners();
-  }
-
-  void connectIdToName(String id, String name) {
-    if (id != null && name != null) {
-      districtIdTodistrictName.putIfAbsent(id, () => name);
-    }
-    notifyListeners();
-  }
-
-  void connectStateIdToStateName(String id, String name) {
-    if (id != null && name != null) {
-      stateIdToStateName.putIfAbsent(id, () => name);
+    } else {
+      myCity = null;
     }
     notifyListeners();
   }
